@@ -52,15 +52,15 @@ if (isDev) {
     devtool : '#cheap-module-eval-source-map',
     devServer,
     plugins: defaultPlugin.concat([
-      new webpack.HotModuleReplacementPlugin(),
-      new webpack.NoEmitOnErrorsPlugin()
+      new webpack.HotModuleReplacementPlugin()
+      // new webpack.NoEmitOnErrorsPlugin()
     ])
   })
 } else {
   config= merge( baseConfig, {
     entry: {
-      app: path.join(__dirname, '../client/index.js'),
-      vendor: ['vue']
+      app: path.join(__dirname, '../client/index.js')
+      // vendor: ['vue']
     },
     output: {
       filename: '[name].[chunkhash:8].js'
@@ -85,14 +85,23 @@ if (isDev) {
         }
       ]
     },
+    optimization: {
+      splitChunks: {
+        chunks: 'all'
+      },
+      runtimeChunk: true
+    },
     plugins: defaultPlugin.concat([
-      new ExtractPlugin('styles.[contentHash:8].css'),
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'vendor'
-      }),
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'runtime'
-      })
+      new ExtractPlugin('styles.[md5:contenthash:hex:8].css')
+      // new ExtractPlugin('styles.[content:20].css')
+      // 由于extract-text-webpack-plugin不再支持webpack4，需要用mini-css-extract-plugin替换，
+      // 我还未替换，先暂时这么写
+      // new webpack.optimize.CommonsChunkPlugin({
+      //   name: 'vendor'
+      // }),
+      // new webpack.optimize.CommonsChunkPlugin({
+      //   name: 'runtime'
+      // })
     ])
   })
 }
