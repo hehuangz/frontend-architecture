@@ -37,6 +37,10 @@ export default {
     Item,
     Tabs
   },
+  props: ['id'],
+  mounted () {
+    console.log(this.id, 1111)
+  },
   computed: {
     filteredTodos () {
       if (this.filter === 'all') {

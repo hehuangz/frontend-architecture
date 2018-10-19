@@ -2,6 +2,8 @@
   <div id="app">
     <div id="cover"></div>
     <Header></Header>
+    <h1>{{counter}}</h1>
+    <h1>{{fullName}}</h1>
     <router-link to="/app">App</router-link>
     <router-link to="/login">Login</router-link>
     <router-view />
@@ -10,15 +12,39 @@
 </template>
 
 <script>
+import { mapState, mapGetters } from 'vuex'
 import Header from './layout/header.vue'
 import Footer from './layout/footer.jsx'
-import Todo from './views/todo/todo.vue'
+// import Todo from './views/todo/todo.vue'
 
 export default {
   components: {
     Header,
-    Footer,
-    Todo
+    Footer
+    // Todo
+  },
+  mounted () {
+    // console.log(11, this.$route)
+    console.log(this.$store)
+    let i = 1
+    setInterval(() => {
+      this.$store.commit('updateCount', i++)
+    }, 1000)
+  },
+  computed: {
+    // ...mapState(['count']),
+    ...mapState({
+      counter: 'count'
+      // counter: (state) => state.count
+    }),
+    // count () {
+    //   return this.$store.state.count
+    // },
+    ...mapGetters(['fullName'])
+    // fullName () {
+    //   console.log('fullName:', this.$store.getters)
+    //   return this.$store.getters.fullName
+    // }
   }
 }
 </script>
