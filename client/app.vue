@@ -12,7 +12,12 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import {
+  mapState,
+  mapGetters,
+  mapActions,
+  mapMutations
+} from 'vuex'
 import Header from './layout/header.vue'
 import Footer from './layout/footer.jsx'
 // import Todo from './views/todo/todo.vue'
@@ -26,10 +31,32 @@ export default {
   mounted () {
     // console.log(11, this.$route)
     console.log(this.$store)
-    let i = 1
-    setInterval(() => {
-      this.$store.commit('updateCount', i++)
-    }, 1000)
+    // let i = 1
+    // setInterval(() => {
+    //   this.$store.commit('updateCount', {
+    //     num: i++,
+    //     num2: 999
+    //   })
+    // }, 1000)
+
+    // this.$store.dispatch('updateCountAsync', {
+    //   num: 5,
+    //   num2: 999,
+    //   time: 2000
+    // })
+
+    // setInterval(() => {
+    //   this.updateCount({
+    //     num: i++,
+    //     num2: 999
+    //   })
+    // }, 1000)
+
+    // this.updateCountAsync({
+    //   num: 5,
+    //   num2: 999,
+    //   time: 2000
+    // })
   },
   computed: {
     // ...mapState(['count']),
@@ -45,6 +72,10 @@ export default {
     //   console.log('fullName:', this.$store.getters)
     //   return this.$store.getters.fullName
     // }
+  },
+  methods: {
+    ...mapActions(['updateCountAsync']),
+    ...mapMutations(['updateCount'])
   }
 }
 </script>
